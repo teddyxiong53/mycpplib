@@ -1,34 +1,34 @@
 #include "Timestamp.h"
+
 #include <sys/time.h>
 #include <stdio.h>
-#define _STDC_FORMAT_MACROS
+#define __STDC_FORMAT_MACROS
 #include <inttypes.h>
-#undef _STDC_FORMAT_MACROS
+#undef __STDC_FORMAT_MACROS
 
 #include <boost/static_assert.hpp>
 
 using namespace muduo;
 
-BOOST_STATIC_ASSERT(sizeof(Timestamp)==sizeof(int64_t));
+BOOST_STATIC_ASSERT(sizeof(Timestamp) == sizeof(int64_t));
 
 Timestamp::Timestamp()
-  : microSecondsSinceEpoch_()
+  : microSecondsSinceEpoch_(0)
 {
-
 }
 
-Timestamp::Timestamp(int64_t timestamp)
-  : microSecondsSinceEpoch_(timestamp)
+Timestamp::Timestamp(int64_t microseconds)
+  : microSecondsSinceEpoch_(microseconds)
 {
-
 }
 
-std::string Timestamp::toString() const {
-    char buf[32] = {0};
-    int64_t seconds = microSecondsSinceEpoch_/kMicroSecondsPerSecond;
-    int64_t microseconds = microSecondsSinceEpoch_%kMicroSecondsPerSecond;
-    snprintf(buf, sizeof(buf)-1, "%" PRId64 ".%06" PRId64 "", seconds, microseconds);
-    return buf;
+std::string Timestamp::toString() const
+{
+  char buf[32] = {0};
+  int64_t seconds = microSecondsSinceEpoch_ / kMicroSecondsPerSecond;
+  int64_t microseconds = microSecondsSinceEpoch_ % kMicroSecondsPerSecond;
+  snprintf(buf, sizeof(buf)-1, "%" PRId64 ".%06" PRId64 "", seconds, microseconds);
+  return buf;
 }
 
 std::string Timestamp::toFormattedString() const
